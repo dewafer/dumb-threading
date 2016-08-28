@@ -8,6 +8,31 @@
 
 本项目仅依赖Java 6,主要靠`java.util.concurrent.*`包下的类,譬如`BlockingQueue`,`ExecutorService`,`Callable`,`Future`等类实现。
 
+### 使用方法
+
+在`pom.xml`中加入：
+
+```xml
+<repositories>
+    <repository>
+        <id>dumb-threading-mvn-repo</id>
+        <url>https://raw.githubusercontent.com/dewafer/dumb-threading/mvn-repo/</url>
+        <snapshots>
+            <enabled>true</enabled>
+            <updatePolicy>always</updatePolicy>
+        </snapshots>
+    </repository>
+</repositories>
+
+<dependencies>
+    <dependency>
+        <groupId>com.dewafer</groupId>
+        <artifactId>dumb-threading</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </dependency>
+</dependencies>
+```
+
 
 ### 主要类说明
 

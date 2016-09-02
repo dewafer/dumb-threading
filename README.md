@@ -103,32 +103,53 @@
 
 
 #### `com.dewafer.threading.demo.BlockingQueuedConsumerRunnerWrapper`
+在单线程生产者消费者演示中负责任务列表的调度以及消费者线程的运行。实现了Callable接口。
+会从任务列队中取任务然后让消费者进行处理，当任务列队接饥饿时将阻塞。当遇到终止信号时将会终止并退出。
 
-// TODO 增加详细说明
+不考虑列队被迫中断的情况,如列队中断将会无条件退出。
+
 
 #### `com.dewafer.threading.demo.NoneBlockingConsumerRunnerWrapper`
+在多线程生产者消费者演示中负责将生产者的产物和对应的消费者包装成可在线程上执行的Callable任务。
+如消费者不接受该产物将会返回null。
 
-// TODO 增加详细说明
+该任务不会中断，不会阻塞。
+
 
 #### `com.dewafer.threading.demo.RootReduceProcessor`
+根Reducer处理器。
+在任务列表切分研是中负责生产任务列表和将生产的任务列表分配给对应的ReduceTaskImpl以及提交执行。
+完成后将等待被切分任务列表执行完成，并将结果合并。
 
-// TODO 增加详细说明
 
 #### `com.dewafer.threading.demo.AbstractListSplittableTask`
+该抽象基类负责任务列表的切分算法。
 
-// TODO 增加详细说明
+首先将尝试切分任务列表，如果任务列表的长度小于某一阈值（THRESHOLD）则不会对任务列表进行切分，直接在当前线程上执行任务列表中的任务。
+
+如果任务列表的长度大于某一阈值（THRESHOLD），则在阈值（THRESHOLD）位置将任务列表切分成左右两个列表，左列表包含第0到阈值位置的元素，
+右列表包含所有剩余的元素。
+
+如果列表被切分，则将切分后的右列表提交新线程处理，本线程继续执行处理左列表。
+
+本线程处理完（左）任务列表后，将本列表的处理结果并上右列表提交到的新线程的Future（如果有的话）打包成TaskResult返回。将不会等待其他线程。
+
 
 #### `com.dewafer.threading.demo.ReduceTaskImpl`
+针对`AbstractListSplittableTask`的列表的具体实现。
 
-// TODO 增加详细说明
+针对本线程将要处理的列表使用`Reducer`进行处理。
 
 
 ### 辅助类
 
 * `com.dewafer.threading.demo.support.Log`
+        负责将`System.out`打包成简单易用的Log
 * `com.dewafer.threading.demo.support.RawProductWrapper`
+        针对列队的包装器，在列队中使用包装器是为了能使用`END_OF_QUEUE`信号。
 * `com.dewafer.threading.demo.support.RunResult`
+        负责收集多次运行的演示结果的Bean
 * `com.dewafer.threading.demo.support.TaskResult`
+        负责收集任务列表切分并处理完成后的结果，以及新开线程的Future和负责合并两者的结果。
 * `com.dewafer.threading.demo.support.Tuple`
-
-// TODO 增加详细说明
+        负责包装左右列表的元祖Bean

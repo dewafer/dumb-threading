@@ -38,11 +38,11 @@
 
 
 #### `com.dewafer.threading.demo.main.ProducerConsumerMain`
-程序主入口之一。// TODO 增加详细说明
+程序主入口之一。将会首先运行3次单线程生产者、单线程消费者演示，然后再运行3次单线程生产者、多线程消费者演示。
 
 
 #### `com.dewafer.threading.demo.main.ReduceProcessorMain`
-程序主入口之一。// TODO 增加详细说明
+程序主入口之一。将会运行3次任务列表切块并行处理演示。
 
 
 #### `com.dewafer.threading.demo.support.Producer`
